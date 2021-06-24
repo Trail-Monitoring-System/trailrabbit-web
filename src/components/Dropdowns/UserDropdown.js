@@ -44,15 +44,15 @@ const UserDropdown = () => {
         }
       >
         <a
-          href="#pablo"
+          href="/"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          // onClick={(e) => e.preventDefault()}
         >
-          Action
+          Log Out
         </a>
-        <a
+        {/* <a
           href="#pablo"
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
@@ -79,7 +79,7 @@ const UserDropdown = () => {
           onClick={(e) => e.preventDefault()}
         >
           Seprated link
-        </a>
+        </a> */}
       </div>
     </>
   );
