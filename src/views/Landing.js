@@ -67,11 +67,11 @@ export default function Landing() {
                 <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
                   <div className="px-4 py-5 flex-auto">
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400">
-                      <i className="fas fa-award"></i>
+                      <i className="fas fa-mobile-alt"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">Striving for Excellence</h6>
+                    <h6 className="text-xl font-semibold">“iPhone and Android App”</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      Continously improving, doing cool things with gizmos and gadgets
+                      “Trail conditions and status in one place”
                     </p>
                   </div>
                 </div>
@@ -85,8 +85,7 @@ export default function Landing() {
                     </div>
                     <h6 className="text-xl font-semibold">Regularly Refreshed Trail Data</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      Those gizmos check the trail conditions regularly to give you a headsup on
-                      if things are optimal for bike stuff.
+                      “Weather and Trail sensors keep give you a heads up if trails are good for riding”
                     </p>
                   </div>
                 </div>
@@ -98,9 +97,9 @@ export default function Landing() {
                     <div className="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400">
                       <i className="fas fa-biking"></i>
                     </div>
-                    <h6 className="text-xl font-semibold">Biking is cool</h6>
+                    <h6 className="text-xl font-semibold">“Crowd sourced information”</h6>
                     <p className="mt-2 mb-4 text-blueGray-500">
-                      Exercise good, biking is exercise, therefore biking is good.
+                      “Always be up to date with what’s happening”
                     </p>
                   </div>
                 </div>
@@ -308,7 +307,7 @@ export default function Landing() {
                 <div className="px-6">
                   <img
                     alt="..."
-                    src={require("assets/img/team-2-800x800.jpg").default}
+                    src={require("assets/img/team-1-800x800.jpg").default}
                     className="shadow-lg rounded-full mx-auto max-w-120-px"
                   />
                   <div className="pt-6 text-center">

@@ -61,7 +61,7 @@ export default function Navbar(props) {
                 </a>
               </li>
 
-              <li className="flex items-center">
+              {/* <li className="flex items-center">
                 <a
                   className="lg:text-white lg:hover:text-blueGray-200 text-blueGray-700 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                   href="#"
@@ -70,7 +70,7 @@ export default function Navbar(props) {
                   <i className="lg:text-blueGray-200 text-blueGray-400 fas fa-tachometer-alt text-lg leading-lg " title="Dashboard" />
                   <span className="lg:hidden inline-block ml-2">Readings</span>
                 </a>
-              </li>
+              </li> */}
 
               <li className="flex items-center">
                 {/* <a
