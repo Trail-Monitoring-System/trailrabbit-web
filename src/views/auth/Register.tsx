@@ -1,6 +1,66 @@
 import React from "react";
 
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { styled } from "@material-ui/core/styles";
+import { Auth } from "aws-amplify";
+import { useHistory } from "react-router-dom";
+
+import useInput from "../../hooks/useInput";
+
+const Field = styled(TextField)({
+  margin: "10px 0",
+});
+
 export default function Register() {
+  const [loading, setLoading] = React.useState(false);
+
+  const history = useHistory();
+
+  const { value: name, bind: bindName } = useInput("");
+  const { value: email, bind: bindEmail } = useInput("");
+  // const { value: phone, bind: bindPhone } = useInput("");
+  // const { value: company, bind: bindCompany } = useInput("");
+  const { value: password, bind: bindPassword } = useInput("");
+  const { value: confirmPassword, bind: bindConfirmPassword } = useInput("");
+
+
+  const handleSignUp = async (e: React.SyntheticEvent<Element, Event>) => {
+    console.log('handling signup...')
+    e.preventDefault();
+    setLoading(true);
+
+    if (password !== confirmPassword) {
+      // TODO: Make this visible to user
+      console.error(
+        "Error!!",
+        "Password and Confirm Password should be same",
+      );
+      return;
+    }
+    try {
+      await Auth.signUp({
+        username: email,
+        password: confirmPassword,
+        attributes: {
+          email,
+          name,
+          // phone_number: phone,
+          // "custom:company": company,
+        },
+      });
+      // TODO: Make this visible to user
+      console.log("Success!!", "Signup was successful");
+      history.push("/confirmation");
+    } catch (error) {
+      console.error(error);
+      // TODO: Make this visible to user
+      console.error("Error!!", error.message);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -43,48 +103,22 @@ export default function Register() {
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign up with credentials</small>
                 </div>
-                <form>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Name
-                    </label>
-                    <input
-                      type="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Name"
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                    />
-                  </div>
+                <form
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                  onSubmit={handleSignUp}
+                >
+                  <Field label="Name" {...bindName} />
+                  <Field label="Email" {...bindEmail} type="email" />
+                  <Field label="Password" type="password" {...bindPassword} />
+                  <Field
+                    label="Confirm Password"
+                    type="password"
+                    {...bindConfirmPassword}
+                  />
 
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
@@ -107,12 +141,16 @@ export default function Register() {
                   </div>
 
                   <div className="text-center mt-6">
-                    <button
-                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                    >
-                      Create Account
-                    </button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading && <CircularProgress size={20} style={{ marginRight: 20 }} />}
+                    Sign Up
+                  </Button>
                   </div>
                 </form>
               </div>
