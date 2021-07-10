@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import logo from '../../assets/img/TrailRabbitLogo.png'; // Tell webpack this JS file uses this image
 
 import NotificationDropdown from "../../components/Dropdowns/NotificationDropdown.js";
-import UserDropdown from "../../components/Dropdowns/UserDropdown.js";
+import UserDropdown from "../../components/Dropdowns/UserDropdown";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
