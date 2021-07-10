@@ -1,11 +1,7 @@
 import React from "react";
-
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { styled } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
+import { Button, CircularProgress, styled, TextField } from "@material-ui/core";
 
 import useInput from "../../hooks/useInput";
 
@@ -20,14 +16,11 @@ export default function Register() {
 
   const { value: name, bind: bindName } = useInput("");
   const { value: email, bind: bindEmail } = useInput("");
-  // const { value: phone, bind: bindPhone } = useInput("");
-  // const { value: company, bind: bindCompany } = useInput("");
   const { value: password, bind: bindPassword } = useInput("");
   const { value: confirmPassword, bind: bindConfirmPassword } = useInput("");
 
 
   const handleSignUp = async (e: React.SyntheticEvent<Element, Event>) => {
-    console.log('handling signup...')
     e.preventDefault();
     setLoading(true);
 
@@ -46,17 +39,13 @@ export default function Register() {
         attributes: {
           email,
           name,
-          // phone_number: phone,
-          // "custom:company": company,
         },
       });
-      // TODO: Make this visible to user
-      console.log("Success!!", "Signup was successful");
       history.push("/confirmation");
     } catch (error) {
       console.error(error);
-      // TODO: Make this visible to user
-      console.error("Error!!", error.message);
+      // TODO: Do we want to log this somewhere?
+      console.error(error.message);
     }
     setLoading(false);
   };
@@ -74,17 +63,6 @@ export default function Register() {
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center">
-                  {/* <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img
-                      alt="..."
-                      className="w-5 mr-1"
-                      src={require("assets/img/github.svg").default}
-                    />
-                    Github
-                  </button> */}
                   <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                     type="button"

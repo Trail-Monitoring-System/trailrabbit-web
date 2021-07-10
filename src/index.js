@@ -6,6 +6,8 @@ import Amplify from "aws-amplify";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 
+import ProtectedRoute from "./components/Auth/ProtectedRoute";
+
 // layouts
 
 import Admin from "./layouts/Admin";
@@ -28,8 +30,9 @@ Amplify.configure({
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      {/* add routes with layouts */}
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin">
+        <ProtectedRoute component={Admin} />
+      </Route>
       <Route path="/auth" component={Auth} />
       {/* add routes without layouts */}
       {/* <Route path="/landing" exact component={Landing} />
