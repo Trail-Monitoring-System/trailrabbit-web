@@ -1,7 +1,36 @@
+import { Button, CircularProgress, styled, TextField } from "@material-ui/core";
+import { Auth } from "aws-amplify";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+import useInput from "../../hooks/useInput";
+
+const Field = styled(TextField)({
+  margin: "10px 0",
+});
 
 export default function Login() {
+  const [loading, setLoading] = React.useState(false);
+
+  const history = useHistory();
+
+  const { value: email, bind: bindEmail } = useInput("");
+  const { value: password, bind: bindPassword } = useInput("");
+
+  const handleSubmit = async (e: React.SyntheticEvent<Element, Event>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      await Auth.signIn(email, password);
+      history.push("/admin/dashboard");
+    } catch (error) {
+      // TODO: Do we want to log this somewhere?
+      console.error(error.message);
+    }
+    setLoading(false);
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -15,17 +44,6 @@ export default function Login() {
                   </h6>
                 </div>
                 <div className="btn-wrapper text-center">
-                  {/* <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img
-                      alt="..."
-                      className="w-5 mr-1"
-                      src={require("assets/img/github.svg").default}
-                    />
-                    Github
-                  </button> */}
                   <button
                     className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
                     type="button"
@@ -33,7 +51,7 @@ export default function Login() {
                     <img
                       alt="..."
                       className="w-5 mr-1"
-                      src={require("assets/img/google.svg").default}
+                      src={require("../../assets/img/google.svg").default}
                     />
                     Google
                   </button>
@@ -44,34 +62,16 @@ export default function Login() {
                 <div className="text-blueGray-400 text-center mb-3 font-bold">
                   <small>Or sign in with credentials</small>
                 </div>
-                <form>
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
-                    />
-                  </div>
-
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                    />
-                  </div>
+                <form
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                  onSubmit={handleSubmit}
+                >  
+                  <Field label="Email" {...bindEmail} type="email" />
+                  <Field label="Password" type="password" {...bindPassword} />
                   <div>
                     <label className="inline-flex items-center cursor-pointer">
                       <input
@@ -86,16 +86,16 @@ export default function Login() {
                   </div>
 
                   <div className="text-center mt-6">
-                  <Link to="/admin" className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  >Sign In
-                  </Link> 
-                    {/* <button
-                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={(e) => }
-                    >
-                      Sign In
-                    </button> */}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    disabled={loading}
+                  >
+                    {loading && <CircularProgress size={20} style={{ marginRight: 20 }} />}
+                    Sign In
+                  </Button>
                   </div>
                 </form>
               </div>

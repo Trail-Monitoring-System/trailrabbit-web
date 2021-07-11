@@ -1,20 +1,36 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
+import { Auth } from "aws-amplify";
+import { useHistory } from "react-router-dom";
 
 const UserDropdown = () => {
-  // dropdown props
+  const history = useHistory();
+
   const [dropdownPopoverShow, setDropdownPopoverShow] = React.useState(false);
-  const btnDropdownRef = React.createRef();
-  const popoverDropdownRef = React.createRef();
+  const btnDropdownRef = React.useRef<HTMLAnchorElement>(null);
+  const popoverDropdownRef = React.useRef<HTMLDivElement>(null);
   const openDropdownPopover = () => {
+    if (btnDropdownRef.current && popoverDropdownRef.current) {
     createPopper(btnDropdownRef.current, popoverDropdownRef.current, {
       placement: "bottom-start",
     });
     setDropdownPopoverShow(true);
+  }
   };
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+      console.log("Success!!", "Logged out successfully!");
+      history.push("/auth/login");
+    } catch (error) {
+      console.error("Error!!", error.message);
+    }
+  };
+
   return (
     <>
       <a
@@ -31,7 +47,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src={require("assets/img/team-1-800x800.jpg").default}
+              src={require("../../assets/img/team-1-800x800.jpg").default}
             />
           </span>
         </div>
@@ -43,15 +59,14 @@ const UserDropdown = () => {
           "bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg min-w-48"
         }
       >
-        <a
-          href="/"
+        <button
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          // onClick={(e) => e.preventDefault()}
+          onClick={handleLogout}
         >
           Log Out
-        </a>
+        </button>
         {/* <a
           href="#pablo"
           className={

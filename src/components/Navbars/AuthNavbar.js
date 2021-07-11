@@ -5,7 +5,7 @@ import logo from '../../assets/img/TrailRabbitLogo.png'; // Tell webpack this JS
 
 // components
 
-import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
+import PagesDropdown from "../../components/Dropdowns/PagesDropdown.js";
 
 export default function Navbar(props) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
